@@ -91,6 +91,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4094322369084305241}
+  - component: {fileID: -5399716202649555761}
   m_Layer: 0
   m_Name: Khoi_S
   m_TagString: Untagged
@@ -116,6 +117,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-5399716202649555761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 612389964967887587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b062d8baf2fd8b94ea790bbb8d6de093, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tocdochoi: 1
 --- !u!1 &5667259224387749801
 GameObject:
   m_ObjectHideFlags: 0
