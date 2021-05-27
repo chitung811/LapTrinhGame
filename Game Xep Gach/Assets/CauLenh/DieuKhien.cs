@@ -6,6 +6,21 @@ public class DieuKhien : MonoBehaviour
 {
     float khoigach = 0;
     public float tocdochoi = 1;
+
+    //Toc do luc giu phim sang ngang va xuong duoi
+    float DangNhanSangNgang = 0.05f;
+    float DangNhanXuongDuoi = 0.1f;
+
+    //Thoi gian
+    float ThoiGianLapKhiGiuPhim = 0.2f;
+    float ThoiGianSangNgang = 0;
+    float ThoiGianXuongDuoi = 0;
+    float ThoiGianNhanPhim = 0;
+
+    //bool di chuyen
+    bool DiChuyenChieuNgang = false;
+    bool DiChuyenChieuDoc = false;
+
     // Update is called once per frame
     void Update()
     {
@@ -14,11 +29,47 @@ public class DieuKhien : MonoBehaviour
 
     void SangTrai()
     {
+        if (DiChuyenChieuNgang)
+        {
+            if(ThoiGianNhanPhim < ThoiGianLapKhiGiuPhim)
+            {
+                ThoiGianNhanPhim += Time.deltaTime;
+                return;
+            }
+            if(ThoiGianSangNgang < DangNhanSangNgang)
+            {
+                ThoiGianSangNgang += Time.deltaTime;
+                return;
+            }
+        }
+        else
+        {
+            DiChuyenChieuNgang = true;
+        }
+        ThoiGianSangNgang = 0;
         transform.position += new Vector3(-1, 0, 0);
         if(!KiemTraVuotBien()) transform.position += new Vector3(1, 0, 0);
     }
     void SangPhai()
     {
+        if (DiChuyenChieuNgang)
+        {
+            if (ThoiGianNhanPhim < ThoiGianLapKhiGiuPhim)
+            {
+                ThoiGianNhanPhim += Time.deltaTime;
+                return;
+            }
+            if (ThoiGianSangNgang < DangNhanSangNgang)
+            {
+                ThoiGianSangNgang += Time.deltaTime;
+                return;
+            }
+        }
+        else
+        {
+            DiChuyenChieuNgang = true;
+        }
+        ThoiGianSangNgang = 0;
         transform.position += new Vector3(1, 0, 0);
         if (!KiemTraVuotBien()) transform.position += new Vector3(-1, 0, 0);
     }
@@ -29,18 +80,46 @@ public class DieuKhien : MonoBehaviour
     }
     void RoiXuong()
     {
+        if (DiChuyenChieuDoc)
+        {
+            if (ThoiGianNhanPhim < ThoiGianLapKhiGiuPhim)
+            {
+                ThoiGianNhanPhim += Time.deltaTime;
+                return;
+            }
+            if (ThoiGianXuongDuoi < DangNhanXuongDuoi)
+            {
+                ThoiGianXuongDuoi += Time.deltaTime;
+                return;
+            }
+        }
+        else
+        {
+            DiChuyenChieuDoc = true;
+        }
+        ThoiGianXuongDuoi = 0;
         transform.position += new Vector3(0, -1, 0);
-        if (!KiemTraVuotBien()) transform.position += new Vector3(0, 1, 0);
+        if (!KiemTraVuotBien()) { 
+            transform.position += new Vector3(0, 1, 0);
+            enabled = false;
+            FindObjectOfType<Bien_Gioi>().KhoiTaoKhoiGach();
+        }
         khoigach = Time.time;
     }
 
     void KiemTraNhanPhim()
     {
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        if(Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.RightArrow) || Input.GetKeyUp(KeyCode.DownArrow))
+        {
+            ThoiGianSangNgang = 0;
+            ThoiGianXuongDuoi = 0;
+            ThoiGianNhanPhim = 0;
+        }
+        if (Input.GetKey(KeyCode.LeftArrow))
         {
             SangTrai();
         }
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        if (Input.GetKey(KeyCode.RightArrow))
         {
             SangPhai();
         }
@@ -48,7 +127,7 @@ public class DieuKhien : MonoBehaviour
         {
             Quay();
         }
-        if (Input.GetKeyDown(KeyCode.DownArrow) || Time.time-khoigach >= tocdochoi)
+        if (Input.GetKey(KeyCode.DownArrow) || Time.time-khoigach >= tocdochoi)
         {
             RoiXuong();
         }
