@@ -45,7 +45,7 @@ public class Bien_Gioi : MonoBehaviour
     //Khoi tao gach
     public void KhoiTaoKhoiGach()
     {
-        GameObject khoigachhientai = (GameObject)Instantiate(Resources.Load(TaoNgauNhienGach(), typeof(GameObject)), new Vector2(5.0f, 20.0f), Quaternion.identity);
+        GameObject khoigachhientai = (GameObject)Instantiate(Resources.Load(TaoNgauNhienGach(), typeof(GameObject)), new Vector2(5.0f, 19.0f), Quaternion.identity);
     }
 
     public Transform TonTaiGach(Vector2 kt)
