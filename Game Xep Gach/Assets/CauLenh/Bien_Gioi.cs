@@ -5,7 +5,9 @@ using UnityEngine;
 public class Bien_Gioi : MonoBehaviour
 {
     public static int Luoi_Rong = 10;
-    public static int Luoi_Cao = 10;
+    public static int Luoi_Cao = 20;
+    public static Transform[,] luoi = new Transform[Luoi_Rong, Luoi_Cao];
+
     public bool ConTrongLuoi(Vector2 kt)
     {
         return ((int)kt.x >= 0 && (int)kt.x < Luoi_Rong && (int)kt.y >= 0);
@@ -44,5 +46,26 @@ public class Bien_Gioi : MonoBehaviour
     public void KhoiTaoKhoiGach()
     {
         GameObject khoigachhientai = (GameObject)Instantiate(Resources.Load(TaoNgauNhienGach(), typeof(GameObject)), new Vector2(5.0f, 19.0f), Quaternion.identity);
+    }
+
+    public Transform TonTaiGach(Vector2 kt)
+    {
+        if (kt.y > Luoi_Cao - 1) return null; else return luoi[(int)kt.x, (int)kt.y];
+    }
+
+    public void UpdateLuoi(DieuKhien khoigach)
+    {
+        for(int y=0;y< Luoi_Cao; ++y)
+        {
+            for(int x=0; x< Luoi_Rong; ++x)
+            {
+                if (luoi[x, y] != null) if (luoi[x, y].parent == khoigach.transform) luoi[x, y] = null;
+            }
+        }
+        foreach (Transform kt in khoigach.transform)
+        {
+            Vector2 vt = Round(kt.position);
+            if (vt.y < Luoi_Cao) luoi[(int)vt.x, (int)vt.y] = kt;
+        }
     }
 }

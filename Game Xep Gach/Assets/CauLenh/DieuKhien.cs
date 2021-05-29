@@ -99,7 +99,11 @@ public class DieuKhien : MonoBehaviour
         }
         ThoiGianXuongDuoi = 0;
         transform.position += new Vector3(0, -1, 0);
-        if (!KiemTraVuotBien()) { 
+        if (KiemTraVuotBien())
+        {
+            FindObjectOfType<Bien_Gioi>().UpdateLuoi(this);
+        }
+        else{ 
             transform.position += new Vector3(0, 1, 0);
             enabled = false;
             FindObjectOfType<Bien_Gioi>().KhoiTaoKhoiGach();
@@ -111,6 +115,8 @@ public class DieuKhien : MonoBehaviour
     {
         if(Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.RightArrow) || Input.GetKeyUp(KeyCode.DownArrow))
         {
+            DiChuyenChieuNgang = false;
+            DiChuyenChieuDoc = false;
             ThoiGianSangNgang = 0;
             ThoiGianXuongDuoi = 0;
             ThoiGianNhanPhim = 0;
@@ -139,6 +145,7 @@ public class DieuKhien : MonoBehaviour
         {
             Vector2 kt = FindObjectOfType<Bien_Gioi>().Round(khoigach.position);
             if (FindObjectOfType<Bien_Gioi>().ConTrongLuoi(kt) == false) return false;
+            if (FindObjectOfType<Bien_Gioi>().TonTaiGach(kt) != null && FindObjectOfType<Bien_Gioi>().TonTaiGach(kt).parent != transform) return false;
         }
         return true;
     }
