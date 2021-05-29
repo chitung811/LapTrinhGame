@@ -130,6 +130,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tocdochoi: 1
+  DuocPhepXoay: 1
+  XoayMotLan: 1
 --- !u!1 &5667259224387749801
 GameObject:
   m_ObjectHideFlags: 0

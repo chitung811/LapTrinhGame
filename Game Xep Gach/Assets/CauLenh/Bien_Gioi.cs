@@ -45,7 +45,7 @@ public class Bien_Gioi : MonoBehaviour
     //Khoi tao gach
     public void KhoiTaoKhoiGach()
     {
-        GameObject khoigachhientai = (GameObject)Instantiate(Resources.Load(TaoNgauNhienGach(), typeof(GameObject)), new Vector2(5.0f, 19.0f), Quaternion.identity);
+        GameObject khoigachhientai = (GameObject)Instantiate(Resources.Load(TaoNgauNhienGach(), typeof(GameObject)), new Vector2(5.0f, 20.0f), Quaternion.identity);
     }
 
     public Transform TonTaiGach(Vector2 kt)
@@ -66,6 +66,59 @@ public class Bien_Gioi : MonoBehaviour
         {
             Vector2 vt = Round(kt.position);
             if (vt.y < Luoi_Cao) luoi[(int)vt.x, (int)vt.y] = kt;
+        }
+    }
+    //Bao cao da day dong
+
+    public bool DaDayDong(int y)
+    {
+        for(int x=0;x < Luoi_Rong;++x)
+        {
+            if (luoi[x, y] == null) return false;
+        }
+        return true;
+    }
+
+    public void ChuyenXuong(int y)
+    {
+        for(int x=0; x < Luoi_Rong;++x)
+        {
+            if(luoi[x,y] != null)
+            {
+                luoi[x, y - 1] = luoi[x, y];
+                luoi[x, y] = null;
+                luoi[x, y - 1].position += new Vector3(0, -1, 0);
+            }
+        }
+    }
+
+    public void ChuyenHetXuong(int y)
+    {
+        for(int i=y; i < Luoi_Cao;++i)
+        {
+            ChuyenXuong(i);
+        }
+    }
+
+    public void XoaDongDay(int y)
+    {
+        for(int x=0; x < Luoi_Rong; ++x)
+        {
+            Destroy(luoi[x, y].gameObject);
+            luoi[x, y] = null;
+        }
+    }
+
+    public void XoaDong()
+    {
+        for(int y=0; y < Luoi_Cao; ++y)
+        {
+            if (DaDayDong(y))
+            {
+                XoaDongDay(y);
+                ChuyenHetXuong(y + 1);
+                --y;
+            }
         }
     }
 }

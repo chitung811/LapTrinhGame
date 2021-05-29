@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,7 +9,7 @@ public class DieuKhien : MonoBehaviour
 
     //Toc do luc giu phim sang ngang va xuong duoi
     float DangNhanSangNgang = 0.05f;
-    float DangNhanXuongDuoi = 0.1f;
+    float DangNhanXuongDuoi = 0.02f;
 
     //Thoi gian
     float ThoiGianLapKhiGiuPhim = 0.2f;
@@ -20,6 +20,8 @@ public class DieuKhien : MonoBehaviour
     //bool di chuyen
     bool DiChuyenChieuNgang = false;
     bool DiChuyenChieuDoc = false;
+    public bool DuocPhepXoay = true;
+    public bool XoayMotLan = false;
 
     // Update is called once per frame
     void Update()
@@ -75,7 +77,14 @@ public class DieuKhien : MonoBehaviour
     }
     void Quay()
     {
-        transform.Rotate(0, 0, 90);
+        if (DuocPhepXoay) 
+        {
+            if (XoayMotLan)
+            {
+                if (transform.rotation.eulerAngles.z >= 90) transform.Rotate(0, 0, -90); else transform.Rotate(0, 0, -90);
+            }
+            else transform.Rotate(0, 0, 90);
+        }
         if (!KiemTraVuotBien()) transform.Rotate(0, 0, -90);
     }
     void RoiXuong()
@@ -105,6 +114,7 @@ public class DieuKhien : MonoBehaviour
         }
         else{ 
             transform.position += new Vector3(0, 1, 0);
+            FindObjectOfType<Bien_Gioi>().XoaDong();
             enabled = false;
             FindObjectOfType<Bien_Gioi>().KhoiTaoKhoiGach();
         }
