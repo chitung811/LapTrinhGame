@@ -7,6 +7,9 @@ public class Bien_Gioi : MonoBehaviour
     public static int Luoi_Rong = 10;
     public static int Luoi_Cao = 20;
     public static Transform[,] luoi = new Transform[Luoi_Rong, Luoi_Cao];
+    private GameObject khoigachhientai, khoigachtieptheo;
+    private bool BatDauChoi = false;
+    private Vector2 HienHinhTiepTheo = new Vector2(15.15f, 15.75f);
 
     public bool ConTrongLuoi(Vector2 kt)
     {
@@ -45,9 +48,25 @@ public class Bien_Gioi : MonoBehaviour
     //Khoi tao gach
     public void KhoiTaoKhoiGach()
     {
-        GameObject khoigachhientai = (GameObject)Instantiate(Resources.Load(TaoNgauNhienGach(), typeof(GameObject)), new Vector2(5.0f, 19.0f), Quaternion.identity);
-    }
+        if (!BatDauChoi)
+        {
+            BatDauChoi = true;
 
+            khoigachhientai = (GameObject)Instantiate(Resources.Load(TaoNgauNhienGach(), typeof(GameObject)), new Vector2(5.0f, 20.0f), Quaternion.identity);
+            khoigachtieptheo = (GameObject)Instantiate(Resources.Load(TaoNgauNhienGach(), typeof(GameObject)), HienHinhTiepTheo, Quaternion.identity);
+            khoigachtieptheo.GetComponent<DieuKhien>().enabled = false;
+        }
+        else
+        {
+            khoigachtieptheo.transform.localPosition = new Vector2(5.0f, 20.0f);
+            khoigachhientai = khoigachtieptheo;
+            khoigachtieptheo.GetComponent<DieuKhien>().enabled = true;
+            khoigachtieptheo = (GameObject)Instantiate(Resources.Load(TaoNgauNhienGach(), typeof(GameObject)), HienHinhTiepTheo, Quaternion.identity);
+            khoigachtieptheo.GetComponent<DieuKhien>().enabled = false;
+        }
+
+
+    }
     public Transform TonTaiGach(Vector2 kt)
     {
         if (kt.y > Luoi_Cao - 1) return null; else return luoi[(int)kt.x, (int)kt.y];
