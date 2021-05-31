@@ -1,6 +1,7 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Bien_Gioi : MonoBehaviour
 {
@@ -11,6 +12,73 @@ public class Bien_Gioi : MonoBehaviour
     private bool BatDauChoi = false;
     private Vector2 HienHinhTiepTheo = new Vector2(15.15f, 15.75f);
 
+    //Tạo số điểm khi xóa dòng cùng lúc
+    public int XoaMotDong = 100;
+    public int XoaHaiDong = 300;
+    public int XoaBaDong = 800;
+    public int XoaBonDong = 1200;
+
+    public Text HienThiDiemSo;
+    public Text HienThiCapDo;
+    public Text HienThiDongXoa;
+
+    private int SoDongBiXoa = 0;
+    private int TongSoDongBiXoa = 0;
+    private int CapDo = 0;
+    private int DiemSoNguoiChoi = 0;
+    private int SoDongTangCap = 5;
+    private void UpdateDiemSo()
+    {
+        if(SoDongBiXoa > 0)
+        {
+            switch (SoDongBiXoa)
+            {
+                case 1:
+                    {
+                        DiemSoNguoiChoi += XoaMotDong;
+                        TongSoDongBiXoa += 1;
+                        break;
+                    }
+                case 2:
+                    {
+                        DiemSoNguoiChoi += XoaHaiDong;
+                        TongSoDongBiXoa += 2;
+                        break;
+                    }
+                case 3:
+                    {
+                        DiemSoNguoiChoi += XoaBaDong;
+                        TongSoDongBiXoa += 3;
+                        break;
+                    }
+                case 4:
+                    {
+                        DiemSoNguoiChoi += XoaBonDong;
+                        TongSoDongBiXoa += 4;
+                        break;
+                    }
+                default: break;
+            }
+            SoDongBiXoa = 0;
+        }
+    }
+
+
+
+    void UpdateUI()
+    {
+        HienThiDiemSo.text = DiemSoNguoiChoi.ToString();
+        HienThiCapDo.text = CapDo.ToString();
+        HienThiDongXoa.text = TongSoDongBiXoa.ToString();
+    }
+   void UpdateCapDo()
+    {
+        if(TongSoDongBiXoa >= SoDongTangCap)
+        {
+            CapDo = TongSoDongBiXoa / SoDongTangCap;
+        }
+    }
+
     public bool ConTrongLuoi(Vector2 kt)
     {
         return ((int)kt.x >= 0 && (int)kt.x < Luoi_Rong && (int)kt.y >= 0);
@@ -19,6 +87,12 @@ public class Bien_Gioi : MonoBehaviour
     private void Start()
     {
         KhoiTaoKhoiGach();
+    }
+    void Update()
+    {
+        UpdateDiemSo();
+        UpdateCapDo();
+        UpdateUI();
     }
 
     public Vector2 Round(Vector2 vt)
@@ -95,6 +169,7 @@ public class Bien_Gioi : MonoBehaviour
         {
             if (luoi[x, y] == null) return false;
         }
+        SoDongBiXoa++;
         return true;
     }
 
