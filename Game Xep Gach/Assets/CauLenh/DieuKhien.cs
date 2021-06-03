@@ -23,6 +23,29 @@ public class DieuKhien : MonoBehaviour
     public bool DuocPhepXoay = true;
     public bool XoayMotLan = false;
 
+    //Cac thuoc tinh am thanh
+    public AudioClip NguonDiChuyen;
+    public AudioClip NguonRoiXuong;
+    public AudioClip NguonXoay;
+    private AudioSource AmThanh;
+
+    private void Start()
+    {
+        AmThanh = GetComponent<AudioSource>();
+    }
+
+    private void AmThanhDiChuyen()
+    {
+        AmThanh.PlayOneShot(NguonDiChuyen);
+    }
+    private void AmThanhRoiXuong()
+    {
+        AmThanh.PlayOneShot(NguonRoiXuong);
+    }
+    private void AmThanhXoay()
+    {
+        AmThanh.PlayOneShot(NguonXoay);
+    }
     // Update is called once per frame
     void Update()
     {
@@ -51,6 +74,7 @@ public class DieuKhien : MonoBehaviour
         ThoiGianSangNgang = 0;
         transform.position += new Vector3(-1, 0, 0);
         if(!KiemTraVuotBien()) transform.position += new Vector3(1, 0, 0);
+        AmThanhDiChuyen();
     }
     void SangPhai()
     {
@@ -74,6 +98,7 @@ public class DieuKhien : MonoBehaviour
         ThoiGianSangNgang = 0;
         transform.position += new Vector3(1, 0, 0);
         if (!KiemTraVuotBien()) transform.position += new Vector3(-1, 0, 0);
+        AmThanhDiChuyen();
     }
     void Quay()
     {
@@ -84,6 +109,7 @@ public class DieuKhien : MonoBehaviour
                 if (transform.rotation.eulerAngles.z >= 90) transform.Rotate(0, 0, -90); else transform.Rotate(0, 0, -90);
             }
             else transform.Rotate(0, 0, 90);
+            AmThanhXoay();
         }
         if (!KiemTraVuotBien()) transform.Rotate(0, 0, -90);
     }
@@ -101,6 +127,7 @@ public class DieuKhien : MonoBehaviour
                 ThoiGianXuongDuoi += Time.deltaTime;
                 return;
             }
+            AmThanhDiChuyen();
         }
         else
         {
@@ -115,6 +142,8 @@ public class DieuKhien : MonoBehaviour
         else{ 
             transform.position += new Vector3(0, 1, 0);
             FindObjectOfType<Bien_Gioi>().XoaDong();
+            AmThanhRoiXuong();
+            if (FindObjectOfType<Bien_Gioi>().KiemTraKetThucGame(this)) FindObjectOfType<Bien_Gioi>().KetThucGame();
             enabled = false;
             FindObjectOfType<Bien_Gioi>().KhoiTaoKhoiGach();
         }

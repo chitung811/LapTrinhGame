@@ -215,4 +215,21 @@ public class Bien_Gioi : MonoBehaviour
             }
         }
     }
+
+    public bool KiemTraKetThucGame(DieuKhien khoigach)
+    {
+        for(int x=0; x<Luoi_Rong; ++x)
+        {
+            foreach(Transform kt in khoigach.transform)
+            {
+                Vector2 gach = Round(kt.position);
+                if(gach.y > Luoi_Cao - 1) return true;
+            }
+        }
+        return false;
+    }
+    public void KetThucGame()
+    {
+        Application.LoadLevel("KetThucGame");
+    }
 }
