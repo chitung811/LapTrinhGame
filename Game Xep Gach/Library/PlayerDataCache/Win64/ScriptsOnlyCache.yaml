@@ -8,7 +8,6 @@ ScriptsOnlyBuild:
     - UnityEditor.U2D.Animation.BoneGizmo
     Unity.2D.IK.Editor.dll:
     - UnityEditor.U2D.IK.IKEditorManager
-    - UnityEditor.U2D.IK.IKGizmos
     Unity.2D.IK.Runtime.dll:
     - UnityEditor.U2D.IK.IKEditorManagerHelper
     Unity.2D.Tilemap.Editor.dll:
@@ -107,6 +106,8 @@ ScriptsOnlyBuild:
     - Class: 104
       Script: {instanceID: 0}
     - Class: 114
+      Script: {instanceID: 1486}
+    - Class: 114
       Script: {instanceID: 2074}
     - Class: 114
       Script: {instanceID: 2352}
@@ -118,6 +119,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 2762}
     - Class: 114
       Script: {instanceID: 2972}
+    - Class: 114
+      Script: {instanceID: 3074}
     - Class: 114
       Script: {instanceID: 4104}
     - Class: 115
@@ -677,4 +680,4 @@ ScriptsOnlyBuild:
   scenePathNames:
   - Assets/PhanCanh/PhanCanhChinh.unity
   - Assets/PhanCanh/KetThucGame.unity
-  playerPath: C:/Users/dell/Desktop/Game xep gach 2/Game Xep Gach.exe
+  playerPath: C:/Users/dell/Desktop/Game Xep Gach Dong Goi/Game Xep Gach.exe

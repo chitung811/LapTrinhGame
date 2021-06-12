@@ -232,4 +232,9 @@ public class Bien_Gioi : MonoBehaviour
     {
         Application.LoadLevel("KetThucGame");
     }
+    public void ThoatGame()
+    {
+        Debug.Log("Yêu cầu kết thúc game");
+        Application.Quit();
+    }
 }
