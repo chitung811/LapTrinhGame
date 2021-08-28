@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Bien_Gioi : MonoBehaviour
 {
     public static int Luoi_Rong = 10;
-    public static int Luoi_Cao = 20;
+    public static int Luoi_Cao = 19;
     public static Transform[,] luoi = new Transform[Luoi_Rong, Luoi_Cao];
     private GameObject khoigachhientai, khoigachtieptheo;
     private bool BatDauChoi = false;
@@ -126,13 +126,13 @@ public class Bien_Gioi : MonoBehaviour
         {
             BatDauChoi = true;
 
-            khoigachhientai = (GameObject)Instantiate(Resources.Load(TaoNgauNhienGach(), typeof(GameObject)), new Vector2(5.0f, 20.0f), Quaternion.identity);
+            khoigachhientai = (GameObject)Instantiate(Resources.Load(TaoNgauNhienGach(), typeof(GameObject)), new Vector2(5.0f, 19.0f), Quaternion.identity);
             khoigachtieptheo = (GameObject)Instantiate(Resources.Load(TaoNgauNhienGach(), typeof(GameObject)), HienHinhTiepTheo, Quaternion.identity);
             khoigachtieptheo.GetComponent<DieuKhien>().enabled = false;
         }
         else
         {
-            khoigachtieptheo.transform.localPosition = new Vector2(5.0f, 20.0f);
+            khoigachtieptheo.transform.localPosition = new Vector2(5.0f, 19.0f);
             khoigachhientai = khoigachtieptheo;
             khoigachtieptheo.GetComponent<DieuKhien>().enabled = true;
             khoigachtieptheo = (GameObject)Instantiate(Resources.Load(TaoNgauNhienGach(), typeof(GameObject)), HienHinhTiepTheo, Quaternion.identity);

@@ -1,11 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class DieuKhien : MonoBehaviour
 {
+    //public PhanCanhChinh phanCanhChinh;
+    public GameObject PanelMenu;
     float khoigach = 0;
     public float tocdochoi = 1;
+    bool Paused = false;
 
     //Toc do luc giu phim sang ngang va xuong duoi
     float DangNhanSangNgang = 0.05f;
@@ -50,18 +55,19 @@ public class DieuKhien : MonoBehaviour
     void Update()
     {
         KiemTraNhanPhim();
+        Pause();
     }
 
     void SangTrai()
     {
         if (DiChuyenChieuNgang)
         {
-            if(ThoiGianNhanPhim < ThoiGianLapKhiGiuPhim)
+            if (ThoiGianNhanPhim < ThoiGianLapKhiGiuPhim)
             {
                 ThoiGianNhanPhim += Time.deltaTime;
                 return;
             }
-            if(ThoiGianSangNgang < DangNhanSangNgang)
+            if (ThoiGianSangNgang < DangNhanSangNgang)
             {
                 ThoiGianSangNgang += Time.deltaTime;
                 return;
@@ -73,7 +79,7 @@ public class DieuKhien : MonoBehaviour
         }
         ThoiGianSangNgang = 0;
         transform.position += new Vector3(-1, 0, 0);
-        if(!KiemTraVuotBien()) transform.position += new Vector3(1, 0, 0);
+        if (!KiemTraVuotBien()) transform.position += new Vector3(1, 0, 0);
         AmThanhDiChuyen();
     }
     void SangPhai()
@@ -102,7 +108,7 @@ public class DieuKhien : MonoBehaviour
     }
     void Quay()
     {
-        if (DuocPhepXoay) 
+        if (DuocPhepXoay)
         {
             if (XoayMotLan)
             {
@@ -139,7 +145,8 @@ public class DieuKhien : MonoBehaviour
         {
             FindObjectOfType<Bien_Gioi>().UpdateLuoi(this);
         }
-        else{ 
+        else
+        {
             transform.position += new Vector3(0, 1, 0);
             FindObjectOfType<Bien_Gioi>().XoaDong();
             AmThanhRoiXuong();
@@ -152,35 +159,61 @@ public class DieuKhien : MonoBehaviour
 
     void KiemTraNhanPhim()
     {
-        if(Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.RightArrow) || Input.GetKeyUp(KeyCode.DownArrow))
+        if (!Paused)
         {
-            DiChuyenChieuNgang = false;
-            DiChuyenChieuDoc = false;
-            ThoiGianSangNgang = 0;
-            ThoiGianXuongDuoi = 0;
-            ThoiGianNhanPhim = 0;
+            if (Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.RightArrow) || Input.GetKeyUp(KeyCode.DownArrow))
+            {
+                DiChuyenChieuNgang = false;
+                DiChuyenChieuDoc = false;
+                ThoiGianSangNgang = 0;
+                ThoiGianXuongDuoi = 0;
+                ThoiGianNhanPhim = 0;
+            }
+            if (Input.GetKey(KeyCode.LeftArrow))
+            {
+                SangTrai();
+            }
+            if (Input.GetKey(KeyCode.RightArrow))
+            {
+                SangPhai();
+            }
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                Quay();
+            }
+            if (Input.GetKey(KeyCode.DownArrow) || Time.time - khoigach >= tocdochoi)
+            {
+                RoiXuong();
+            }
         }
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            SangTrai();
-        }
-        if (Input.GetKey(KeyCode.RightArrow))
-        {
-            SangPhai();
-        }
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            Quay();
-        }
-        if (Input.GetKey(KeyCode.DownArrow) || Time.time-khoigach >= tocdochoi)
-        {
-            RoiXuong();
-        }
+    }
+
+    void Pause()
+    {
+        //if (Input.GetKeyDown(KeyCode.Escape))
+        //{
+        //    if (Paused == true)
+        //    {
+        //        phanCanhChinh.gameObject.SetActive(PanelMenu.gameObject.activeSelf);
+        //        PanelMenu.SetActive(false);
+        //        Time.timeScale = 1.0f;
+        //        Paused = false;
+        //        Debug.Log("Unpause");
+        //    }
+        //    else
+        //    {
+        //        PanelMenu.SetActive(false);
+        //        PanelMenu.SetActive(true);
+        //        Time.timeScale = 0.0f;
+        //        Paused = true;
+        //        Debug.Log("Pause");
+        //    }
+        //}
     }
 
     public bool KiemTraVuotBien()
     {
-        foreach(Transform khoigach in transform)
+        foreach (Transform khoigach in transform)
         {
             Vector2 kt = FindObjectOfType<Bien_Gioi>().Round(khoigach.position);
             if (FindObjectOfType<Bien_Gioi>().ConTrongLuoi(kt) == false) return false;
