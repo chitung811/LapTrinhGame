@@ -27,6 +27,7 @@ public class Bien_Gioi : MonoBehaviour
     private int CapDo = 0;
     private int DiemSoNguoiChoi = 0;
     private int SoDongTangCap = 5;
+    private float tocdo = 1;
     private void UpdateDiemSo()
     {
         if(SoDongBiXoa > 0)
@@ -76,6 +77,9 @@ public class Bien_Gioi : MonoBehaviour
         if(TongSoDongBiXoa >= SoDongTangCap)
         {
             CapDo = TongSoDongBiXoa / SoDongTangCap;
+            tocdo = (float)CapDo/4+1;
+            Debug.Log(tocdo);
+            Time.timeScale = tocdo;
         }
     }
 
